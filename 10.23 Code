@@ -1,0 +1,93 @@
+-- Create the table
+CREATE TABLE discovery.airbnb
+(
+    room_id bigint NOT NULL,
+	survey_id integer,
+    host_id integer,
+    room_type text COLLATE pg_catalog."default",
+	country text COLLATE pg_catalog."default",
+	city text COLLATE pg_catalog."default",
+	borough text COLLATE pg_catalog."default",
+    neighborhood text COLLATE pg_catalog."default",
+    reviews integer,
+    overall_satisfaction real,
+    accommodates integer,
+    bedrooms real,
+    bathrooms real,
+    price integer,
+    minstay integer,
+    name text COLLATE pg_catalog."default",
+    created_date timestamp with time zone,
+	latitude float8,
+	longitude float8,
+	location text COLLATE pg_catalog."default",
+    CONSTRAINT airbnb_pkey PRIMARY KEY (room_id)
+)
+select count(*) from discovery.airbnb
+
+Select * from discovery.airbnb
+
+Select 
+	max(Price) as Maximum_Price 
+	from discovery.airbnb
+	
+Select 
+	min(Price) as Minimum_Price 
+	from discovery.airbnb
+	
+Select
+	sum(bedrooms) as Total_Available_Bedrooms
+	from discovery.airbnb
+	
+Select 
+	count (*) as total_units,
+	count (room_id) as number_of_rooms
+	from discovery.airbnb
+	where neighborhood = 'Girdwood'
+	
+Select 
+	sum(bedrooms) as total_bedrooms
+	from discovery.airbnb
+	where neighborhood = 'Girdwood'
+	
+Select
+	round (avg (reviews), 2)
+	as Average_Review_Score
+	from discovery.airbnb
+	
+Select
+	distinct overall_satisfaction,
+	count (overall_satisfaction)
+	from discovery.airbnb
+	group by overall_satisfaction
+	Order by overall_satisfaction desc
+	
+Select
+	avg (overall_satisfaction)
+	from discovery.airbnb
+	where overall_satisfaction <> '0'	
+	
+select
+	--room_type,
+	accommodates,
+	round (avg (price), 2) as average_price,
+	max (price)
+	from discovery.airbnb
+	where neighborhood = 'Girdwood'
+	group by 
+		--room_type,
+		accommodates
+	order by
+		--room_type,
+		accommodates
+		desc
+		
+select
+	neighborhood,
+	max (reviews) as Highest_Review
+	from discovery.airbnb
+	group by 
+		neighborhood,
+		reviews
+	order by max(reviews) desc
+	
